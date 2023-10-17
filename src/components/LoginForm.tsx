@@ -7,10 +7,17 @@ import Image from "next/image";
 export default function LoginForm() {
   return (
     <Wrapper full>
-      <div className="w-3/4 sm:w-1/2 md:w-3/4 lg:w-1/2 bg-slate-600 text-white m-auto p-6 rounded-lg ">
-        <div className="font-light text-zinc-300 mt-4 mb-4">
-          <h3>Login</h3>
-          <p>with your Email and Password</p>
+      <div className="w-3/4 sm:w-1/2 md:w-3/4 lg:w-1/2 bg-gray-100 text-gray-800 m-auto p-6 rounded-lg shadow-lg">
+        <div className="text-center  mb-8">
+          <Image
+            src="logo_black.svg"
+            width="100"
+            height="100"
+            alt="logo"
+            className="m-auto mb-3"
+          />
+          <h3 className="text-3xl font-bold">Login</h3>
+          <p className="text-sm text-gray-600">with your Email and Password</p>
         </div>
 
         <form action="">
@@ -18,46 +25,48 @@ export default function LoginForm() {
             type="text"
             name=""
             id=""
-            className="w-full p-2 mt-4 mb-4 rounded-md"
+            className="w-full p-3 mb-4 rounded-md border border-gray-300"
             placeholder="Your Email"
           />
           <input
-            type="text"
+            type="password"
             name=""
             id=""
-            className="w-full p-2 mt-4 mb-4 rounded-md"
+            className="w-full p-3 mb-4 rounded-md border border-gray-300"
             placeholder="Your Password"
           />
-          <input
+          <button
             type="submit"
             className={buttonVariants({
               size: "lg",
-              className: "flex items-center w-full mt-3",
+              className:
+                "w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-700",
             })}
-          />
-          {/* <p className="text-red-200">Error Message</p> */}
+          >
+            Login
+          </button>
         </form>
 
-        <span className="mx-auto block text-center mt-4 mb-4">-or-</span>
+        <div className="my-6 text-center">
+          <span className="text-gray-600">-or-</span>
+        </div>
 
         <div className="flex justify-between items-center">
           <Link
             href="/"
             className={buttonVariants({
               size: "lg",
-              className: "flex items-center w-full",
+              className: "mt-5 border w-full",
             })}
           >
             Sign in With &nbsp; &nbsp;
             <FaGoogle />
           </Link>
-          <span className="w-3"></span>
-
           <Link
             href="/"
             className={buttonVariants({
               size: "lg",
-              className: "flex items-center w-full",
+              className: "mt-5 border w-full",
             })}
           >
             Sign in With &nbsp; &nbsp;
@@ -65,9 +74,12 @@ export default function LoginForm() {
           </Link>
         </div>
 
-        <div>
-          <p>
-            Dont have an account <Link href="/">Sign Up here</Link>
+        <div className="mt-6 text-center">
+          <p className="text-gray-600">
+            Don't have an account?{" "}
+            <Link href="/" className="hover:underline">
+              Sign Up here
+            </Link>
           </p>
         </div>
       </div>
