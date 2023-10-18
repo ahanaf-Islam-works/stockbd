@@ -5,16 +5,16 @@ import Link from "next/link";
 import { AlignLeft, Search } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
-import LogButton from "./UserButton";
+import LogButton from "./LogButton";
 
 export default function Navbar() {
   const [state, setState] = useState(false);
 
   const menus = [
-    { title: "Home", path: "/your-path" },
-    { title: "Blog", path: "/your-path" },
-    { title: "About Us", path: "/your-path" },
-    { title: "Contact Us", path: "/your-path" },
+    { title: "Home", path: "/" },
+    { title: "Blogs", path: "/blogs" },
+    { title: "About Us", path: "/about-us" },
+    { title: "Contact Us", path: "/contact-us" },
   ];
 
   return (
@@ -41,7 +41,7 @@ export default function Navbar() {
         >
           <ul className="justify-end items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
             {menus.map((item, idx) => (
-              <li key={idx} className="  hover:text-indigo-600">
+              <li key={idx} className="  hover:text-slate-600">
                 <Link href={item.path}>{item.title}</Link>
               </li>
             ))}

@@ -1,7 +1,6 @@
 "use client";
 
-import { signIn, useSession } from "next-auth/react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 
 import Link from "next/link";
@@ -10,62 +9,77 @@ import { FaGoogle, FaGithub } from "react-icons/fa";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
 
-export default function LoginForm() {
-  const router = useRouter();
-  const { status } = useSession();
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-  const [isPageLoading, setIsPageLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
+export default function SignUpForm() {
+  const [pageLoading, setPageLoading] = useState(true);
+
+  const { status } = useSession();
+  const router = useRouter();
+
+  // check session thne redirect to dashboard
 
   useEffect(() => {
     if (status === "loading") {
-      setIsPageLoading(true);
+      setPageLoading(true);
     }
     if (status === "authenticated") {
       router.push("/dashboard");
     }
     if (status === "unauthenticated") {
-      setIsPageLoading(false);
+      setPageLoading(false);
     }
   }, [status]);
 
-  const searchParams = useSearchParams();
-  const callBack = searchParams.get("callBackUrl") || "/dashboard";
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [formValue, setFormValue] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const onSubmit = async (e: FormEvent) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+
+  const onsubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      setFormValue({ email: "", password: "" });
+    setLoading(true);
 
-      const res = await signIn("credentials", {
-        redirect: false,
-        email: formValue.email,
-        password: formValue.password,
-        callBack,
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(formValue),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       setLoading(false);
 
-      if (!res?.error) {
-        router.push(callBack);
-      } else {
-        setError("invalid email or password");
+      if (res.status == 404) {
+        setError("Server not working");
+        return;
+      }
+      if (!res.ok) {
+        setError((await res.json()).message);
+        return;
+      }
+
+      if (res.ok) {
+        signIn("credentials", {
+          email: formValue.email,
+          password: formValue.password,
+          callbackUrl: "/dashboard",
+        });
       }
     } catch (error: any) {
       setLoading(false);
       setError(error);
     }
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormValue({ ...formValue, [name]: value });
   };
 
   return (
@@ -79,25 +93,36 @@ export default function LoginForm() {
             alt="logo"
             className="m-auto mb-3"
           />
-          <h3 className="text-3xl font-bold">Login</h3>
-          <p className="text-sm text-gray-600">with your Email and Password</p>
+          <h3 className="text-3xl font-bold">Welcome to StockBd</h3>
+          <p className="text-sm text-gray-600">
+            Sign up with your Email and Password
+          </p>
         </div>
 
-        {isPageLoading ? (
+        {pageLoading ? (
           <div className="flex justify-center items-center">
             <div className="w-6 h-6 border-2 border-blue-500 rounded-full animate-spin"></div>
           </div>
         ) : (
           <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onsubmit}>
+              <input
+                type="name"
+                name="name"
+                value={formValue.name}
+                onChange={handleChange}
+                className="w-full p-3 mb-4 rounded-md border border-gray-300"
+                placeholder="Your Name"
+              />
               <input
                 type="email"
                 name="email"
-                value={formValue.email}
                 onChange={handleChange}
+                value={formValue.email}
                 className="w-full p-3 mb-4 rounded-md border border-gray-300"
                 placeholder="Your Email"
               />
+
               <input
                 type="password"
                 name="password"
@@ -114,7 +139,7 @@ export default function LoginForm() {
                     "w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-700",
                 })}
               >
-                {loading ? "loading..." : "Sign In"}
+                {loading ? "loading..." : "Sign Up"}
               </button>
               {error && (
                 <p className="text-center bg-red-300 py-4 mb-6 rounded">
@@ -135,7 +160,7 @@ export default function LoginForm() {
                   className: "mt-5 border w-full",
                 })}
               >
-                Sign in With &nbsp; &nbsp;
+                Signup With &nbsp; &nbsp;
                 <FaGoogle />
               </Link>
               <Link
@@ -145,16 +170,16 @@ export default function LoginForm() {
                   className: "mt-5 border w-full",
                 })}
               >
-                Sign in With &nbsp; &nbsp;
+                Signup With &nbsp; &nbsp;
                 <FaGithub />
               </Link>
             </div>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">
-                Don't have an account?{" "}
-                <Link href="/register" className="hover:underline">
-                  Sign Up here
+                Already have an account?{" "}
+                <Link href="/login" className="hover:underline">
+                  Login here
                 </Link>
               </p>
             </div>

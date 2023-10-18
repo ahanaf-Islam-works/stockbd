@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Wrapper from "@/components/Wrapper";
 import Link from "next/link";
+import LogButton from "@/components/LogButton";
 import {
   ArrowRight,
   User2Icon,
@@ -69,17 +70,7 @@ export default function Home() {
           empower you to make informed decisions, turning knowledge into profit.
         </p>
 
-        <Link
-          className={buttonVariants({
-            size: "lg",
-            className: "mt-5 border border-white",
-            variant: "default",
-          })}
-          href="/dashboard"
-          target="_blank"
-        >
-          Get started <ArrowRight className="ml-2 h-5 w-5" />
-        </Link>
+        <LogButton getStarted />
 
         <div className="mx-auto max-w-6xl px-6 lg:px-8">
           <div className="mt-8 flow-root sm:mt-24">
