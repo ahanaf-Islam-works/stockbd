@@ -44,10 +44,10 @@ export default function LoginForm() {
       setFormValue({ email: "", password: "" });
 
       const res = await signIn("credentials", {
-        redirect: false,
+        redirect: true,
         email: formValue.email,
         password: formValue.password,
-        callBack,
+        callbackUrl: "/dashboard",
       });
 
       setLoading(false);

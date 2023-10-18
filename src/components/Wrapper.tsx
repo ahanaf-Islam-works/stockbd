@@ -7,6 +7,7 @@ interface WrapperProps {
   dark?: boolean;
   full?: boolean;
 }
+// px-3 md:px-10 pt-4 sm:pt-4 md:pt-8 lg:pt-10 xl:pt-12 pb-4 sm:pb-4 md:pb-8 lg:pb-10 xl:pb-12
 
 const Wrapper = ({ className, children, dark, full }: WrapperProps) => {
   return (
@@ -18,7 +19,7 @@ const Wrapper = ({ className, children, dark, full }: WrapperProps) => {
     >
       <div
         className={cn(
-          "mx-auto w-full max-w-screen-xl px-3 md:px-10 flex flex-col justify-center pt-4 sm:pt-4 md:pt-8 lg:pt-10 xl:pt-12 pb-4 sm:pb-4 md:pb-8 lg:pb-10 xl:pb-12",
+          "mx-auto w-full max-w-screen-xl flex flex-col justify-center container",
 
           {
             "min-h-screen": full,
