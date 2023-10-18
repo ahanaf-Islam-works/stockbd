@@ -1,11 +1,16 @@
 import Profile from "./Profile";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
-export default function Dashboard() {
+
+export default async function Dashboard() {
+  const session = await getServerSession(authOptions);
+  const userInfo = session?.user;
   return (
     <section className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-5 font-light mx-5 min-h-screen rounded-md mt-4 mb-4 p-2">
       <div className="min-h-full shadow rounded-md lg:col-span-2 col-span-12 m-auto w-full sm:w-full p-4">
-        <Profile />
+        {session && userInfo && <Profile user={userInfo} />}
 
         <Link
           href="/"
@@ -23,11 +28,11 @@ export default function Dashboard() {
         </Link>
       </div>
 
-      <div className="min-h-full rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full p-4">
+      <div className="min-h-full shadow rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full p-4">
         <h1>Markets Overview</h1>
       </div>
 
-      <div className="min-h-full rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full p-4">
+      <div className="min-h-full shadow rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full p-4">
         <h1>Portfolio</h1>
       </div>
     </section>

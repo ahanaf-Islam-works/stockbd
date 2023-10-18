@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { userProps } from "@/props/userProps";
 import {
   User,
   LayoutDashboard,
@@ -8,12 +9,13 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-export default function Profile() {
+export default async function Profile({ user }: { user: userProps }) {
+  const number = 100000;
   return (
     <aside className="bg-white p-6 rounded shadow-sm flex flex-col mb-7">
       <div className="flex items-center gap-4">
         <User size={30} className="border-2 border-cyan-950 rounded-full" />
-        <p className="text-base font-semibold text-zinc-700">John Doe</p>
+        <p className="text-base font-semibold text-zinc-700">{user.name}</p>
       </div>
       <div className="flex items-center gap-4 mb-10 border-b-2 pb-4 border-zinc-500">
         <DollarSign
@@ -21,8 +23,11 @@ export default function Profile() {
           className="border-2 border-cyan-950 rounded-full"
         />
         <p className="text-base font-semibold text-zinc-700">
-          Balance <br />
-          <span className="font-bold text-zinc-600">100000.00</span>
+          Balance
+          <br />
+          <span className="font-bold text-zinc-600">
+            {number.toLocaleString("en-Us")}{" "}
+          </span>
         </p>
       </div>
 
