@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AlignLeft, Search } from "lucide-react";
 import { buttonVariants } from "./ui/button";
 import Image from "next/image";
+import LogButton from "./UserButton";
 
 export default function Navbar() {
   const [state, setState] = useState(false);
@@ -56,15 +57,7 @@ export default function Navbar() {
             </li>
 
             <li>
-              <Link
-                href="/dashboard"
-                className={buttonVariants({
-                  size: "lg",
-                  className: " border border-white",
-                })}
-              >
-                Dashboard
-              </Link>
+              <LogButton />
             </li>
           </ul>
         </div>

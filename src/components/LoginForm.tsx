@@ -69,73 +69,83 @@ export default function LoginForm() {
           <p className="text-sm text-gray-600">with your Email and Password</p>
         </div>
 
-        <form onSubmit={onSubmit}>
-          <input
-            type="email"
-            name="email"
-            value={formValue.email}
-            onChange={handleChange}
-            className="w-full p-3 mb-4 rounded-md border border-gray-300"
-            placeholder="Your Email"
-          />
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            value={formValue.password}
-            className="w-full p-3 mb-4 rounded-md border border-gray-300"
-            placeholder="Your Password"
-          />
-          <button
-            type="submit"
-            className={buttonVariants({
-              size: "lg",
-              className:
-                "w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-700",
-            })}
-          >
-            {loading ? "loading..." : "Sign In"}
-          </button>
-          {error && (
-            <p className="text-center bg-red-300 py-4 mb-6 rounded">{error}</p>
-          )}
-        </form>
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <div className="w-6 h-6 border-2 border-blue-500 rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <>
+            <form onSubmit={onSubmit}>
+              <input
+                type="email"
+                name="email"
+                value={formValue.email}
+                onChange={handleChange}
+                className="w-full p-3 mb-4 rounded-md border border-gray-300"
+                placeholder="Your Email"
+              />
+              <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                value={formValue.password}
+                className="w-full p-3 mb-4 rounded-md border border-gray-300"
+                placeholder="Your Password"
+              />
+              <button
+                type="submit"
+                className={buttonVariants({
+                  size: "lg",
+                  className:
+                    "w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-700",
+                })}
+              >
+                {loading ? "loading..." : "Sign In"}
+              </button>
+              {error && (
+                <p className="text-center bg-red-300 py-4 mb-6 rounded">
+                  {error}
+                </p>
+              )}
+            </form>
 
-        <div className="my-6 text-center">
-          <span className="text-gray-600">-or-</span>
-        </div>
+            <div className="my-6 text-center">
+              <span className="text-gray-600">-or-</span>
+            </div>
 
-        <div className="flex justify-between items-center">
-          <Link
-            href="/"
-            className={buttonVariants({
-              size: "lg",
-              className: "mt-5 border w-full",
-            })}
-          >
-            Sign in With &nbsp; &nbsp;
-            <FaGoogle />
-          </Link>
-          <Link
-            href="/"
-            className={buttonVariants({
-              size: "lg",
-              className: "mt-5 border w-full",
-            })}
-          >
-            Sign in With &nbsp; &nbsp;
-            <FaGithub />
-          </Link>
-        </div>
+            <div className="flex justify-between items-center">
+              <Link
+                href="/"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "mt-5 border w-full",
+                })}
+              >
+                Sign in With &nbsp; &nbsp;
+                <FaGoogle />
+              </Link>
+              <Link
+                href="/"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "mt-5 border w-full",
+                })}
+              >
+                Sign in With &nbsp; &nbsp;
+                <FaGithub />
+              </Link>
+            </div>
 
-        <div className="mt-6 text-center">
-          <p className="text-gray-600">
-            Don't have an account?{" "}
-            <Link href="/" className="hover:underline">
-              Sign Up here
-            </Link>
-          </p>
-        </div>
+            <div className="mt-6 text-center">
+              <p className="text-gray-600">
+                Don't have an account?{" "}
+                <Link href="/" className="hover:underline">
+                  Sign Up here
+                </Link>
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </Wrapper>
   );

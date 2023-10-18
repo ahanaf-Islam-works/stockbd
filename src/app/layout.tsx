@@ -4,6 +4,7 @@ import { Rubik } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { NextAuthProvider } from "@/providers/providers";
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("min-h-screen overflow-x-hidden", rubik.className)}>
-        <Navbar />
-        {children}
-        <Footer />
+        <NextAuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </NextAuthProvider>
       </body>
     </html>
   );
