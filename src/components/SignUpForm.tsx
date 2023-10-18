@@ -70,7 +70,8 @@ export default function SignUpForm() {
       }
 
       if (res.ok) {
-        signIn("credentials", {
+        setPageLoading(true);
+        await signIn("credentials", {
           email: formValue.email,
           password: formValue.password,
           callbackUrl: "/dashboard",

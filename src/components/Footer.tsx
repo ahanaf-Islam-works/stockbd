@@ -79,11 +79,16 @@ export default function Footer() {
               <Image
                 // if Wrapper is dark then src="/logo_black.svg" else src="/logo_white.svg"
                 src={false ? "/logo_black.svg" : "/logo_white.svg"}
-                height={250}
-                width={250}
+                height={150}
+                width={150}
+                className="mt-2 mb-4"
                 alt="logo"
               />
             </Link>
+            <p className="text-left">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Repellendus dolore soluta
+            </p>
           </div>
 
           <div>

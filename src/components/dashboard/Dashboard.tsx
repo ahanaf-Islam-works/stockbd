@@ -1,34 +1,18 @@
-"use client";
 import Wrapper from "../Wrapper";
-import { useSession } from "next-auth/react";
 export default function Dashboard() {
-  const { data: session, status } = useSession();
   return (
-    <Wrapper full>
-      <div className="grid grid-cols-12 bg-red-600 gap-7 gap-y-8">
-        <div className="col-span-3 bg-pink-500">
-          <p className="h-32 text-white">
-            {status === "loading" ? "Loading..." : session?.user?.name}
-          </p>
-        </div>
-        <div className="col-span-9 bg-pink-900">
-          <p className="h-32"></p>
-        </div>
-
-        <div className="col-span-3 bg-pink-500">
-          <p className="h-32"></p>
-        </div>
-        <div className="col-span-9 bg-pink-900">
-          <p className="h-32"></p>
-        </div>
-
-        <div className="col-span-3 bg-pink-500">
-          <p className="h-32"></p>
-        </div>
-        <div className="col-span-9 bg-pink-900">
-          <p className="h-32"></p>
-        </div>
+    <section className="bg-slate-300 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-10 gap-5 font-light mx-5 min-h-screen rounded-md mt-4 mb-4 p-2">
+      <div className="min-h-full bg-slate-500 rounded-md lg:col-span-2 col-span-12 m-auto w-full sm:w-full">
+        <h1>Profile</h1>
       </div>
-    </Wrapper>
+
+      <div className="min-h-full bg-slate-500 rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full">
+        <h1>Markets Overview</h1>
+      </div>
+
+      <div className="min-h-full bg-slate-500 rounded-md lg:col-span-4 col-span-12 m-auto w-full sm:w-full">
+        <h1>Portfolio</h1>
+      </div>
+    </section>
   );
 }

@@ -19,7 +19,7 @@ const Wrapper = ({ className, children, dark, full }: WrapperProps) => {
     >
       <div
         className={cn(
-          "mx-auto w-full max-w-screen-xl flex flex-col justify-center container",
+          "mx-auto w-full max-w-screen-xl flex flex-col justify-center container sm:pt-4 md:pt-8 lg:pt-10 xl:pt-12",
 
           {
             "min-h-screen": full,
