@@ -1,3 +1,4 @@
+import GithubProvider from "next-auth/providers/github";
 import prisma from "@/db";
 import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
@@ -43,6 +44,10 @@ export const authOptions: NextAuthOptions = {
           randomKey: "Hey cool",
         };
       },
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT as string,
+      clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
 

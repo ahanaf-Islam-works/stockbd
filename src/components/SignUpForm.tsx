@@ -11,6 +11,7 @@ import Image from "next/image";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { trpc } from "@/app/_trpc/client";
 
 export default function SignUpForm() {
   const [pageLoading, setPageLoading] = useState(true);
@@ -79,6 +80,10 @@ export default function SignUpForm() {
       setLoading(false);
       setError(error);
     }
+  };
+
+  const handleGithubLogin = async () => {
+    await signIn("github", { callbackUrl: "/auth-callback" });
   };
 
   return (
@@ -162,8 +167,8 @@ export default function SignUpForm() {
                 Signup With &nbsp; &nbsp;
                 <FaGoogle />
               </Link>
-              <Link
-                href="/"
+              <button
+                onClick={handleGithubLogin}
                 className={buttonVariants({
                   size: "lg",
                   className: "mt-5 border w-full",
@@ -171,7 +176,7 @@ export default function SignUpForm() {
               >
                 Signup With &nbsp; &nbsp;
                 <FaGithub />
-              </Link>
+              </button>
             </div>
 
             <div className="mt-6 text-center">

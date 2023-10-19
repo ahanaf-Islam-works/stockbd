@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, useSession } from "next-auth/react";
+import { getProviders } from "next-auth/react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 
@@ -11,6 +12,7 @@ import { buttonVariants } from "./ui/button";
 import Image from "next/image";
 
 export default function LoginForm() {
+  const providers = getProviders();
   const router = useRouter();
   const { status } = useSession();
 
@@ -68,6 +70,9 @@ export default function LoginForm() {
     setFormValue({ ...formValue, [name]: value });
   };
 
+  const handleGithubLogin = async () => {
+    await signIn("github", { callbackUrl: callBack });
+  };
   return (
     <Wrapper full>
       <div className="w-3/4 sm:w-1/2 md:w-3/4 lg:w-1/2 bg-gray-100 text-gray-800 m-auto p-6 rounded-lg shadow-lg">
@@ -138,8 +143,8 @@ export default function LoginForm() {
                 Sign in With &nbsp; &nbsp;
                 <FaGoogle />
               </Link>
-              <Link
-                href="/"
+              <button
+                onClick={handleGithubLogin}
                 className={buttonVariants({
                   size: "lg",
                   className: "mt-5 border w-full",
@@ -147,7 +152,7 @@ export default function LoginForm() {
               >
                 Sign in With &nbsp; &nbsp;
                 <FaGithub />
-              </Link>
+              </button>
             </div>
 
             <div className="mt-6 text-center">
