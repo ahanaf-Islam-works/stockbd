@@ -18,14 +18,12 @@ export default function SignUpForm() {
   const { status } = useSession();
   const router = useRouter();
 
-  // check session thne redirect to dashboard
-
   useEffect(() => {
     if (status === "loading") {
       setPageLoading(true);
     }
     if (status === "authenticated") {
-      router.push("/dashboard");
+      router.push("/auth-callback");
     }
     if (status === "unauthenticated") {
       setPageLoading(false);
@@ -74,7 +72,7 @@ export default function SignUpForm() {
         await signIn("credentials", {
           email: formValue.email,
           password: formValue.password,
-          callbackUrl: "/dashboard",
+          callbackUrl: "/auth-callback",
         });
       }
     } catch (error: any) {

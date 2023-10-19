@@ -27,11 +27,6 @@ export const authController = async () => {
       },
     });
   }
-  // after create get the userinfo
-  const fetchedUser = await db.user.findUnique({
-    where: {
-      email: session.user.email,
-    },
-  });
-  return { sucess: true, user: fetchedUser };
+
+  return { success: true };
 };

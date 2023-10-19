@@ -27,7 +27,7 @@ export default function LoginForm() {
       setIsPageLoading(true);
     }
     if (status === "authenticated") {
-      router.push("/dashboard");
+      router.push("/auth-callback");
     }
     if (status === "unauthenticated") {
       setIsPageLoading(false);
@@ -35,7 +35,7 @@ export default function LoginForm() {
   }, [status]);
 
   const searchParams = useSearchParams();
-  const callBack = searchParams.get("callBackUrl") || "/dashboard";
+  const callBack = searchParams.get("/auth-callback") || "/dashboard";
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
