@@ -9,5 +9,15 @@ CREATE TABLE "User" (
     "updatedAt" DATETIME NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "RealTimeStock" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "name" TEXT NOT NULL,
+    "lastTradedPrice" TEXT NOT NULL,
+    "priceChange" TEXT NOT NULL,
+    "changeSymbol" TEXT NOT NULL,
+    "changePercentage" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

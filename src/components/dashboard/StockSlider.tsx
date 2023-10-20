@@ -1,8 +1,11 @@
 "use client";
-
+import RealTimeStockProps from "@/props/realTimeStockProps";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
+interface Props {
+  stocks: RealTimeStockProps[];
+}
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -21,44 +24,7 @@ const responsive = {
   },
 };
 
-const stocks = [
-  {
-    name: "AAPL",
-    price: 100,
-    change: 0.5,
-    sign: "+",
-  },
-
-  {
-    name: "TSLA",
-    price: 200,
-    change: 0.5,
-    sign: "-",
-  },
-
-  {
-    name: "AMZN",
-    price: 300,
-    change: 0.5,
-    sign: "+",
-  },
-
-  {
-    name: "FB",
-    price: 400,
-    change: 0.5,
-    sign: "-",
-  },
-
-  {
-    name: "GOOG",
-    price: 500,
-    change: 0.5,
-    sign: "+",
-  },
-];
-
-export default function StockSlider() {
+export default function StockSlider({ stocks }: Props) {
   return (
     <Carousel
       additionalTransfrom={0}
@@ -91,18 +57,17 @@ export default function StockSlider() {
               <p className="text-base font-semibold text-zinc-700">
                 {stock.name}
               </p>
-              <p className="text-xs flex justify-between">
-                {stock.price}
-                {
-                  <span
-                    className={`${
-                      stock.sign === "+" ? "text-green-500" : "text-red-500"
-                    }`}
-                  >
-                    {stock.sign}
-                    {stock.change}
-                  </span>
-                }
+              <p className="text-base font-semibold text-zinc-700">
+                {stock.lastTradedPrice}
+              </p>
+              <p className="text-base font-semibold text-zinc-700">
+                {stock.priceChange}
+              </p>
+              <p className="text-base font-semibold text-zinc-700">
+                {stock.changeSymbol}
+              </p>
+              <p className="text-base font-semibold text-zinc-700">
+                {stock.changePercentage}
               </p>
             </div>
           </div>
