@@ -37,7 +37,7 @@ const LogButton = ({
             >
               Sign Up
             </Link>
-          ) : isLoggedin && isHomepage ? (
+          ) : isLoggedin && !isDashboard ? (
             <Link
               href="/dashboard"
               className={buttonVariants({ size: "lg", className })}

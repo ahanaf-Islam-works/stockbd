@@ -12,6 +12,8 @@ import {
   MultiSelect,
   MultiSelectItem,
 } from "@tremor/react";
+import Link from "next/link";
+import { buttonVariants } from "../ui/button";
 
 const salesPeople = [
   {
@@ -138,6 +140,18 @@ export default function Example() {
                 <TableCell className="text-right">{item.variance}</TableCell>
                 <TableCell className="text-right">
                   <BadgeDelta deltaType={item.deltaType} size="xs"></BadgeDelta>
+                </TableCell>
+                <TableCell>
+                  <Link
+                    href="#"
+                    className={buttonVariants({
+                      size: "lg",
+                      className: "w-full",
+                      variant: "outline",
+                    })}
+                  >
+                    Sell
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}

@@ -74,8 +74,8 @@ export default function LoginForm() {
     await signIn("github", { callbackUrl: callBack });
   };
   return (
-    <Wrapper full>
-      <div className="w-3/4 sm:w-1/2 md:w-3/4 lg:w-1/2 bg-gray-100 text-gray-800 m-auto p-6 rounded-lg shadow-lg">
+    <Wrapper>
+      <div className="w-4/5 sm:w-3/4 md:w-3/4 lg:w-1/2 bg-gray-100  m-auto p-6 rounded-lg shadow-lg">
         <div className="text-center  mb-8">
           <Image
             src="logo_black.svg"
@@ -128,11 +128,11 @@ export default function LoginForm() {
               )}
             </form>
 
-            <div className="my-6 text-center">
+            <div className="my-2 text-center">
               <span className="text-gray-600">-or-</span>
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center flex-col md:flex-row">
               <Link
                 href="/"
                 className={buttonVariants({
