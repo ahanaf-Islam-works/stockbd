@@ -13,14 +13,6 @@ export default function Market() {
   return (
     <div className="flex flex-col">
       <StockSlider stocks={stocks} />
-      <button
-        className={buttonVariants({
-          size: "lg",
-          className: "mt-2 mb-4",
-        })}
-      >
-        Update
-      </button>
     </div>
   );
 }
