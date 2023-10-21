@@ -16,6 +16,8 @@ model User {
   name     String?
   password String
 
+  admin Boolean @default(false)
+
   balance   Int      @default(100000)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -3,6 +3,18 @@ import prisma from "@/db";
 import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import db from "@/db";
+import "next-auth/jwt";
+
+// declare the module for token session
+declare module NextAuthOptions {
+  interface User {
+    id: number;
+    email: string;
+    balance: number;
+    role: string;
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -50,7 +62,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
   ],
-
   callbacks: {
     session: ({ session, token }) => {
       return {
@@ -58,17 +69,25 @@ export const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey,
+          balance: token.balance,
+          role: token.role,
         },
       };
     },
-    jwt: ({ token, user }) => {
-      if (user) {
+    jwt: async ({ token, user }) => {
+      const dbUser = await db.user.findUnique({
+        where: {
+          email: token.email as string,
+        },
+      });
+      if (user && dbUser) {
         const u = user as unknown as any;
         return {
           ...token,
           id: u.id,
-          randomKey: u.randomKey,
+          email: u.email,
+          balance: dbUser.admin,
+          role: dbUser.admin,
         };
       }
       return token;
