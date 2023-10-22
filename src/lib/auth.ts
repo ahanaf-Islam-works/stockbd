@@ -10,10 +10,10 @@ import "next-auth/jwt";
 declare module "next-auth" {
   interface Session {
     user: User & {
-      id: string; // Changed type to string
+      id: string;
       email: string;
       balance: number;
-      role: boolean; // Changed type to string
+      role: boolean; //
     };
   }
 }
