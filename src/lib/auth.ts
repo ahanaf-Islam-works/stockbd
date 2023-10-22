@@ -1,22 +1,25 @@
 import GithubProvider from "next-auth/providers/github";
 import prisma from "@/db";
 import { compare } from "bcryptjs";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import db from "@/db";
 import "next-auth/jwt";
 
 // declare the module for token session
-declare module NextAuthOptions {
-  interface User {
-    id: number;
-    email: string;
-    balance: number;
-    role: string;
+declare module "next-auth" {
+  interface Session {
+    user: User & {
+      id: string; // Changed type to string
+      email: string;
+      balance: number;
+      role: boolean; // Changed type to string
+    };
   }
 }
 
 export const authOptions: NextAuthOptions = {
+  // Added type annotation
   pages: {
     signIn: "/login",
   },
@@ -37,7 +40,8 @@ export const authOptions: NextAuthOptions = {
           type: "password",
         },
       },
-      async authorize(credentials: Record<"email" | "password", string>) {
+      async authorize(credentials) {
+        // Removed type annotation for credentials parameter
         if (!credentials?.email || !credentials.password) {
           return null;
         }
@@ -53,7 +57,8 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           name: user.name,
           email: user.email,
-          randomKey: "Hey cool",
+          balance: user.balance,
+          role: user.admin,
         };
       },
     }),
@@ -81,12 +86,11 @@ export const authOptions: NextAuthOptions = {
         },
       });
       if (user && dbUser) {
-        const u = user as unknown as any;
         return {
           ...token,
-          id: u.id,
-          email: u.email,
-          balance: dbUser.admin,
+          id: user.id,
+          email: user.email,
+          balance: dbUser.balance,
           role: dbUser.admin,
         };
       }

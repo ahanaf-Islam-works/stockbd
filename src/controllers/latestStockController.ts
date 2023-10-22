@@ -3,7 +3,7 @@
 import db from "@/db";
 import { TRPCError } from "@trpc/server";
 
-const updateStockDatabase = async () => {
+const latestStock = async () => {
   const latestStockData = await db.realTimeStock.findMany({});
   if (!latestStockData) {
     throw new TRPCError({
@@ -14,4 +14,4 @@ const updateStockDatabase = async () => {
   return latestStockData;
 };
 
-export { updateStockDatabase };
+export { latestStock };

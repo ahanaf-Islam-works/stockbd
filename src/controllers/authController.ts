@@ -21,7 +21,7 @@ export const authController = async () => {
   if (!dbuser) {
     await db.user.create({
       data: {
-        password: "From Email",
+        password: "k6tMxUpIyGyJwQ0XWJ5HbnyiCpFvBmweTJy/hwP3s7c=",
         email: session.user.email,
         name: session.user.name,
       },
