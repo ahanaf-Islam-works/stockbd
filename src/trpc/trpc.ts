@@ -5,30 +5,41 @@ import db from "@/db";
 const t = initTRPC.create();
 const middleware = t.middleware;
 
-const isAuth = middleware(async ({ ctx }: { ctx: any }) => {
-  const session = await getServerSession();
+const isAuth = middleware(async (opts) => {
+  const getUser = await getServerSession();
+  const user = getUser?.user;
 
-  if (!session?.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+  if (!user) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to do this",
+    });
   }
-  return ctx.next({
+
+  return opts.next({
     ctx: {
-      session,
+      userId: user.id,
+      user,
     },
   });
 });
 
-const isAdmin = middleware(async ({ ctx }: { ctx: any }) => {
+const isAdmin = middleware(async (opts) => {
   const session = await getServerSession();
 
-  if (session?.user.role == true) {
-    return ctx.next({
-      ctx: {
-        session,
-      },
+  if (session?.user.role == false) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You must be an admin to do this",
     });
   }
-  throw new TRPCError({ code: "UNAUTHORIZED" });
+
+  return opts.next({
+    ctx: {
+      userId: session?.user.id,
+      user: session?.user,
+    },
+  });
 });
 
 export const router = t.router;

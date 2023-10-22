@@ -11,8 +11,6 @@ export default function Market() {
   }
 
   return (
-    <div className="flex flex-col">
-      <StockSlider stocks={stocks} />
-    </div>
+    <div className="flex flex-col">{/* <StockSlider stocks={stocks} /> */}</div>
   );
 }

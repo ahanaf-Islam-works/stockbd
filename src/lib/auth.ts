@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
       if (user && dbUser) {
         return {
           ...token,
-          id: user.id,
+          id: dbUser.id,
           email: user.email,
           balance: dbUser.balance,
           role: dbUser.admin,
