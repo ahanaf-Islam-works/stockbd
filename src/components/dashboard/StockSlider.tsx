@@ -31,7 +31,6 @@ export default function StockSlider({ stocks }: Props) {
       autoPlay={true}
       autoPlaySpeed={2000}
       centerMode={false}
-      className="border-b border-gray-200"
       removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
       draggable
       focusOnSelect={false}
@@ -51,24 +50,32 @@ export default function StockSlider({ stocks }: Props) {
         return (
           <div
             key={index}
-            className="bg-white p-3 rounded flex flex-col mb-5 mr-1 shadow-md hover:shadow-lg"
+            className=" p-3 rounded flex flex-col mb-5 mr-1 border bg-slate-50 hover:shadow-lg text-center cursor-pointer"
           >
             <div className="">
               <p className="text-base font-semibold text-zinc-700">
                 {stock.name}
               </p>
-              <p className="text-base font-semibold text-zinc-700">
+              <p className="text-xs font-semibold text-zinc-700">
                 {stock.lastTradedPrice}
               </p>
-              <p className="text-base font-semibold text-zinc-700">
+              <p className="text-sm font-semibold text-zinc-700">
                 {stock.priceChange}
               </p>
-              <p className="text-base font-semibold text-zinc-700">
-                {stock.changeSymbol}
-              </p>
-              <p className="text-base font-semibold text-zinc-700">
-                {stock.changePercentage}
-              </p>
+
+              {stock.changeSymbol === "up" ? (
+                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
+                  {stock.changePercentage}
+                </p>
+              ) : stock.changeSymbol === "down" ? (
+                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
+                  {stock.changePercentage}
+                </p>
+              ) : stock.changeSymbol === "nutral" ? (
+                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
+                  {stock.changePercentage}
+                </p>
+              ) : null}
             </div>
           </div>
         );

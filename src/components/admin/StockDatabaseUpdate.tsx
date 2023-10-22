@@ -3,12 +3,14 @@ import React from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Callout } from "@tremor/react";
 import { Loader2 } from "lucide-react";
-import { AppRouter } from "@/trpc";
+
+import { ExclamationIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { buttonVariants } from "../ui/button";
 
 interface StockDatabaseUpdateProps {
   title: string;
-  queryKey: "updateStockDatabase";
+  queryKey: keyof typeof trpc;
+  description?: string;
 }
 
 const useCustomStockQuery = (queryKey: keyof typeof trpc & string) => {
@@ -18,6 +20,7 @@ const useCustomStockQuery = (queryKey: keyof typeof trpc & string) => {
 const StockDatabaseUpdate: React.FC<StockDatabaseUpdateProps> = ({
   title,
   queryKey,
+  description,
 }) => {
   const {
     data: dbResponse,
@@ -33,31 +36,44 @@ const StockDatabaseUpdate: React.FC<StockDatabaseUpdateProps> = ({
 
   return (
     <div>
-      <h4>{title}</h4>
+      <h5 className="text-2xl text-center">{title}</h5>
+      <p className="text-zinc-600 text-xs text-center">{description}</p>
       <button
         className={buttonVariants({
           size: "lg",
-          className: "mt-4 mb-4",
+          className: "mt-4 mb-4 w-full",
         })}
         onClick={ok}
       >
-        Update Stock Database
+        Update
       </button>
-      {isFetching && (
-        <div className="flex justify-start">
-          <Loader2 className="animate-spin" />
-        </div>
-      )}
-      {status === "success" && (
-        <Callout title="" color="green" className="mt-4">
-          {dbResponse.stock.length} stocks updated
-        </Callout>
-      )}
-      {status === "error" && (
-        <Callout title="" color="rose" className="text-base mt-4">
-          {error.message}
-        </Callout>
-      )}
+      <div>
+        {isFetching && (
+          <div className="flex justify-start">
+            <Loader2 className="animate-spin" />
+          </div>
+        )}
+        {status === "success" && (
+          <Callout
+            title=""
+            icon={CheckCircleIcon}
+            color="green"
+            className="mt-4"
+          >
+            {dbResponse?.stock?.length} stocks updated
+          </Callout>
+        )}
+        {status === "error" && (
+          <Callout
+            title=""
+            icon={ExclamationIcon}
+            color="rose"
+            className="text-base mt-4"
+          >
+            {error.message}
+          </Callout>
+        )}
+      </div>
     </div>
   );
 };
