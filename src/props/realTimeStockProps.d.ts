@@ -6,3 +6,5 @@ declare interface RealTimeStockProps {
   changeSymbol: String;
   changePercentage: String;
 }
+
+export default RealTimeStockProps;

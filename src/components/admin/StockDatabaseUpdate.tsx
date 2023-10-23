@@ -3,13 +3,14 @@ import React from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Callout } from "@tremor/react";
 import { Loader2 } from "lucide-react";
+import type { AppRouter } from "@/trpc";
 
 import { ExclamationIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { buttonVariants } from "../ui/button";
 
 interface StockDatabaseUpdateProps {
   title: string;
-  queryKey: keyof typeof trpc;
+  queryKey: keyof AppRouter & string;
   description?: string;
 }
 
@@ -28,7 +29,7 @@ const StockDatabaseUpdate: React.FC<StockDatabaseUpdateProps> = ({
     isFetching,
     error,
     status,
-  } = useCustomStockQuery(queryKey);
+  } = useCustomStockQuery(queryKey as keyof typeof trpc & string);
 
   const ok = async () => {
     await refetch();

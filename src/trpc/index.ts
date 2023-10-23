@@ -6,7 +6,7 @@ import {
 } from "./trpc";
 import { authController } from "@/controllers/authController";
 import { realtimeStockController } from "@/controllers/realtimeStockController";
-import { updateRealtimeStockDB } from "@/controllers/updateRealtimeStockDBController";
+import updateRealtimeStockDB from "@/controllers/updateRealtimeStockDBController";
 
 export const appRouter = router({
   testPublic: publicProcedure.query(() => {
