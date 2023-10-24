@@ -1,7 +1,7 @@
 // Assuming you have already declared the interface RealTimeStockProps
 
 import db from "@/db";
-
+import { TRPCError } from "@trpc/server";
 const updateRealtimeStockDB = async () => {
   try {
     // Fetch data from Alpha Vantage API
@@ -9,6 +9,7 @@ const updateRealtimeStockDB = async () => {
       "https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey=demo"
     );
     const stockData = await response.json();
+    if (!stockData) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
 
     // Clear the existing data
     if (response) {

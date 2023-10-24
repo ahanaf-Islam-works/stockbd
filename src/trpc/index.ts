@@ -7,6 +7,7 @@ import {
 import { authController } from "@/controllers/authController";
 import { realtimeStockController } from "@/controllers/realtimeStockController";
 import updateRealtimeStockDB from "@/controllers/updateRealtimeStockDBController";
+import updateStockGraphDbController from "@/controllers/updateStockGraphDbController";
 
 export const appRouter = router({
   testPublic: publicProcedure.query(() => {
@@ -19,6 +20,7 @@ export const appRouter = router({
     return { message: "Test private" };
   }),
   getStockDataRealtime: privateProcedure.query(realtimeStockController),
+  getStockGraphData: privateProcedure.query(updateStockGraphDbController),
 
   // Admin api
   testAdmin: adminProcedure.query(() => {

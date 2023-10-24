@@ -33,6 +33,7 @@ const StockDatabaseUpdate: React.FC<StockDatabaseUpdateProps> = ({
 
   const ok = async () => {
     await refetch();
+    console.log("hello");
   };
 
   return (

@@ -9,6 +9,7 @@ import { UserCircle2 } from "lucide-react";
 
 export default async function Page() {
   const session = await getServerSession();
+
   const isAdmin = session?.user.role;
   if (isAdmin) {
     redirect("/");
@@ -39,14 +40,14 @@ export default async function Page() {
         <Card className="mb-5 h-full">
           <StockDatabaseUpdate
             title="Real Time Stock Data"
-            queryKey="updateStockDatabase"
+            queryKey="testAdmin"
             description="Update the stock database with the latest stock data"
           />
         </Card>
         <Card className="">
           <StockDatabaseUpdate
             title="Stock Graph Data"
-            queryKey="testPrivate"
+            queryKey="getStockGraphData"
             description="Update the stock database with the latest stock data"
           />
         </Card>
