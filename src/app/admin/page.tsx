@@ -40,7 +40,7 @@ export default async function Page() {
         <Card className="mb-5 h-full">
           <StockDatabaseUpdate
             title="Real Time Stock Data"
-            queryKey="testAdmin"
+            queryKey="updateStockDatabase"
             description="Update the stock database with the latest stock data"
           />
         </Card>

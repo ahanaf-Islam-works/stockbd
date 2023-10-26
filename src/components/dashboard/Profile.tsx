@@ -9,8 +9,8 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-export default async function Profile({ user }: { user: userProps }) {
-  const number = 100000;
+export default function Profile({ user }: { user: userProps }) {
+  const number = user.balance as number;
   return (
     <aside className="bg-white p-6 rounded shadow-sm flex flex-col mb-7">
       <div className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export default async function Profile({ user }: { user: userProps }) {
           Balance
           <br />
           <span className="font-bold text-zinc-600">
-            {number.toLocaleString("en-Us")}{" "}
+            {number.toLocaleString("en-Us")} BDT
           </span>
         </p>
       </div>
