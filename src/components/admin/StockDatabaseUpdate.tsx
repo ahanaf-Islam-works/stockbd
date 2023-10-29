@@ -3,14 +3,14 @@ import React from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Callout } from "@tremor/react";
 import { Loader2 } from "lucide-react";
-import type {  AdminRouter } from "@/trpc";
 
 import { ExclamationIcon, CheckCircleIcon } from "@heroicons/react/solid";
 import { buttonVariants } from "../ui/button";
 
 interface StockDatabaseUpdateProps {
   title: string;
-  queryKey: keyof AdminRouter;
+  // keyof typeof trpc.admin  exclude "getQueryKey" from the type of queryKey keyof Omit<typeof trpc.admin, "getQueryKey">;
+  queryKey: keyof Omit<typeof trpc.admin, "getQueryKey">;
   description?: string;
 }
 
@@ -25,7 +25,7 @@ const StockDatabaseUpdate: React.FC<StockDatabaseUpdateProps> = ({
     isFetching,
     error,
     status,
-  } = trpc.admin[queryKey].useQuery(undefined, { enabled: false }) 
+  } = trpc.admin[queryKey].useQuery(undefined, { enabled: false });
 
   const ok = async () => {
     await refetch();

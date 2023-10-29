@@ -9,9 +9,9 @@ import Portfolio from "./Portfolio";
 import PersonalGraph from "./PersonalGraph";
 import Transactions from "./Transactions";
 import { serverClient } from "@/trpc/serverClient";
+import { Session } from "next-auth";
 
-export default async function Dashboard() {
-  const session = await getServerSession(authOptions);
+export default async function Dashboard({ session }: { session: Session }) {
   const userInfo = session?.user;
   const graphData = await serverClient.user.getStockGraphData();
 

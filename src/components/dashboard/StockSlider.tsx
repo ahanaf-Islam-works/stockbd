@@ -49,38 +49,41 @@ export default function StockSlider({ stocks }: Props) {
     >
       {stocks.map((stock, index) => {
         return (
-          <Link href={`/test`} key={index}>
-          <div
+          <Link
+            href={"/stock/" + stock.name.toLocaleLowerCase()}
             key={index}
-            className=" p-3 rounded flex flex-col mb-5 mr-1 border bg-slate-50 hover:shadow-lg text-center cursor-pointer"
+            target="_blank"
           >
-            <div className="">
-              <p className="text-base font-semibold text-zinc-700">
-                {stock.name}
-              </p>
-              <p className="text-xs font-semibold text-zinc-700">
-                {stock.lastTradedPrice}
-              </p>
-              <p className="text-sm font-semibold text-zinc-700">
-                {stock.priceChange}
-              </p>
+            <div
+              key={index}
+              className=" p-3 rounded flex flex-col mb-5 mr-1 border bg-slate-50 hover:shadow-lg text-center cursor-pointer"
+            >
+              <div className="">
+                <p className="text-base font-semibold text-zinc-700">
+                  {stock.name}
+                </p>
+                <p className="text-xs font-semibold text-zinc-700">
+                  {stock.lastTradedPrice}
+                </p>
+                <p className="text-sm font-semibold text-zinc-700">
+                  {stock.priceChange}
+                </p>
 
-              {stock.changeSymbol === "up" ? (
-                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
-                  {stock.changePercentage}
-                </p>
-              ) : stock.changeSymbol === "down" ? (
-                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
-                  {stock.changePercentage}
-                </p>
-              ) : stock.changeSymbol === "nutral" ? (
-                <p className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
-                  {stock.changePercentage}
-                </p>
-                
-              ) : null}
+                {stock.changeSymbol === "up" ? (
+                  <p className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
+                    {stock.changePercentage}
+                  </p>
+                ) : stock.changeSymbol === "down" ? (
+                  <p className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
+                    {stock.changePercentage}
+                  </p>
+                ) : stock.changeSymbol === "nutral" ? (
+                  <p className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
+                    {stock.changePercentage}
+                  </p>
+                ) : null}
+              </div>
             </div>
-          </div>
           </Link>
         );
       })}

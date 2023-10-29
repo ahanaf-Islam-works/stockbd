@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { userProps } from "@/props/userProps";
+import { Session } from "next-auth";
 import {
-  User,
+  User2,
   LayoutDashboard,
   DollarSign,
   Settings,
@@ -9,12 +9,12 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-export default function Profile({ user }: { user: userProps }) {
+export default function Profile({ user }: { user: Session["user"] }) {
   const number = user.balance as number;
   return (
     <aside className="bg-white p-6 rounded shadow-sm flex flex-col mb-7">
       <div className="flex items-center gap-4">
-        <User size={30} className="border-2 border-cyan-950 rounded-full" />
+        <User2 size={30} className="border-2 border-cyan-950 rounded-full" />
         <p className="text-base font-semibold text-zinc-700">{user.name}</p>
       </div>
       <div className="flex items-center gap-4 mb-10 border-b-2 pb-4 border-zinc-500">

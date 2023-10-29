@@ -8,7 +8,7 @@ import { trpc } from "../_trpc/client";
 const Page = () => {
   const router = useRouter();
 
-  const {} = trpc.authCallBack.useQuery(undefined, {
+  const {} = trpc.user.authCallBack.useQuery(undefined, {
     onSuccess: ({ success }) => {
       if (success) {
         router.push("/dashboard");

@@ -9,6 +9,6 @@ export default async function Page() {
     return redirect("/login");
   }
   if (session?.user) {
-    return <Dashboard />;
+    return <Dashboard session={session} />;
   }
 }
