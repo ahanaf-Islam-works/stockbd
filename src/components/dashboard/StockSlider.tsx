@@ -1,8 +1,8 @@
 "use client";
 import RealTimeStockProps from "@/types/realTimeStockProps";
-import Link from "next/link";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import Buystocks from "./Buystocks";
 
 interface Props {
   stocks: RealTimeStockProps[];
@@ -49,16 +49,12 @@ export default function StockSlider({ stocks }: Props) {
     >
       {stocks.map((stock, index) => {
         return (
-          <Link
-            href={"/stock/" + stock.name.toLocaleLowerCase()}
-            key={index}
-            target="_blank"
-          >
+          <Buystocks stock={stock} key={index}>
             <div
               key={index}
               className=" p-3 rounded flex flex-col mb-5 mr-1 border bg-slate-50 hover:shadow-lg text-center cursor-pointer"
             >
-              <div className="">
+              <div>
                 <p className="text-base font-semibold text-zinc-700">
                   {stock.name}
                 </p>
@@ -68,7 +64,6 @@ export default function StockSlider({ stocks }: Props) {
                 <p className="text-sm font-semibold text-zinc-700">
                   {stock.priceChange}
                 </p>
-
                 {stock.changeSymbol === "up" ? (
                   <p className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
                     {stock.changePercentage}
@@ -77,14 +72,14 @@ export default function StockSlider({ stocks }: Props) {
                   <p className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
                     {stock.changePercentage}
                   </p>
-                ) : stock.changeSymbol === "nutral" ? (
+                ) : stock.changeSymbol === "neutral" ? (
                   <p className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
                     {stock.changePercentage}
                   </p>
                 ) : null}
               </div>
             </div>
-          </Link>
+          </Buystocks>
         );
       })}
     </Carousel>

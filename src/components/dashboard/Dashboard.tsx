@@ -63,7 +63,6 @@ export default async function Dashboard({ session }: { session: Session }) {
           id="previous"
           className="lg:col-span-8 col-span-12 lg:col-start-3 shadow rounded-md order-4"
         >
-          <Buystocks user={userInfo} />
           <Transactions />
         </div>
       </section>
