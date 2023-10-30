@@ -1,8 +1,15 @@
 import { FC } from "react";
 
 import Wrapper from "@/components/Wrapper";
-import SingleStockView from "@/components/singleStock/SingleStockView";
+
 import { serverClient } from "@/trpc/serverClient";
+import dynamic from "next/dynamic";
+const SingleStockView = dynamic(
+  () => import("@/components/singleStock/SingleStockView"),
+  {
+    ssr: false,
+  }
+);
 interface pageProps {
   params: {
     symbol: string;

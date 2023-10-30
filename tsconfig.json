@@ -26,6 +26,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "src/types/**/*.ts",
     ".next/types/**/*.ts",
     "src/utils/getStockDataRealtime.js"
   ],

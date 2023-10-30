@@ -1,6 +1,4 @@
 import Profile from "./Profile";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
 import Market from "./Market";
@@ -10,6 +8,7 @@ import PersonalGraph from "./PersonalGraph";
 import Transactions from "./Transactions";
 import { serverClient } from "@/trpc/serverClient";
 import { Session } from "next-auth";
+import Buystocks from "./Buystocks";
 
 export default async function Dashboard({ session }: { session: Session }) {
   const userInfo = session?.user;
@@ -64,6 +63,7 @@ export default async function Dashboard({ session }: { session: Session }) {
           id="previous"
           className="lg:col-span-8 col-span-12 lg:col-start-3 shadow rounded-md order-4"
         >
+          <Buystocks user={userInfo} />
           <Transactions />
         </div>
       </section>

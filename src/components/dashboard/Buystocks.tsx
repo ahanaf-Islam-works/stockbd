@@ -1,3 +1,4 @@
+"use client";
 import { User } from "next-auth";
 
 interface BuystocksProps {

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import {
   User2,
   LayoutDashboard,

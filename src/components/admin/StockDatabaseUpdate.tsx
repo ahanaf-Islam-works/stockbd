@@ -9,7 +9,6 @@ import { buttonVariants } from "../ui/button";
 
 interface StockDatabaseUpdateProps {
   title: string;
-  // keyof typeof trpc.admin  exclude "getQueryKey" from the type of queryKey keyof Omit<typeof trpc.admin, "getQueryKey">;
   queryKey: keyof Omit<typeof trpc.admin, "getQueryKey">;
   description?: string;
 }

@@ -1,9 +1,12 @@
 "use client";
-
 import { createContext, useContext, useState } from "react";
-import { UserActionsContextType } from "@/props/userProps";
 
-const UserActionsContext = createContext<UserActionsContextType>({
+type userContextProps = {
+  userActions: boolean;
+  setUserActions: (value: boolean) => void;
+};
+
+const UserActionsContext = createContext<userContextProps>({
   userActions: false,
   setUserActions: () => {},
 });
