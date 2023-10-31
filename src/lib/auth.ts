@@ -7,9 +7,6 @@ import db from "@/db";
 import "next-auth/jwt";
 import { JWT } from "next-auth/jwt";
 
-
-
-
 export const authOptions: NextAuthOptions = {
   // Added type annotation
   pages: {
@@ -32,10 +29,10 @@ export const authOptions: NextAuthOptions = {
           type: "password",
         },
       },
-      async authorize(credentials ) {
+      async authorize(credentials) {
         // Removed type annotation for credentials parameter
         if (!credentials?.email || !credentials.password) {
-           throw new Error("Please enter your email and password.");
+          throw new Error("Please enter your email and password.");
         }
         const user = await prisma.user.findUnique({
           where: {
@@ -75,7 +72,7 @@ export const authOptions: NextAuthOptions = {
         },
       };
     },
-    
+
     jwt: async ({ token, user }) => {
       const dbUser = await db.user.findUnique({
         where: {
@@ -88,13 +85,12 @@ export const authOptions: NextAuthOptions = {
           id: dbUser.id,
           name: dbUser.name,
           email: dbUser.email,
-          image: null, 
+          image: null,
           balance: dbUser.balance,
           role: dbUser.admin,
-        } as JWT
+        } as JWT;
       }
       return token;
     },
-     
   },
 };

@@ -1,5 +1,4 @@
 // Buystocks.js
-
 "use client";
 import React from "react";
 import Link from "next/link";
@@ -12,48 +11,54 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import RealTimeStockProps from "@/types/realTimeStockProps";
+import BuyStockButton from "./BuyStockButton";
 
 interface BuyStockProps {
-  stock: RealTimeStockProps; // Change from an array to a single stock
+  stock: RealTimeStockProps;
   children?: React.ReactNode;
 }
 
 const Buystocks = ({ stock, children }: BuyStockProps) => {
+  const { name, lastTradedPrice, priceChange, changeSymbol, changePercentage } =
+    stock;
+
   return (
     <Dialog>
       <DialogTrigger className="w-full">{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="text-center m-auto">
         <DialogHeader>
-          <DialogTitle>{stock.name}</DialogTitle>
-          <div className="mb-16">
-            <p className="text-xs font-semibold text-zinc-700">
-              {stock.lastTradedPrice}
-            </p>
-            <p className="text-sm font-semibold text-zinc-700">
-              {stock.priceChange}
-            </p>
-            {stock.changeSymbol === "up" ? (
-              <p className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
-                {stock.changePercentage}
-              </p>
-            ) : stock.changeSymbol === "down" ? (
-              <p className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
-                {stock.changePercentage}
-              </p>
-            ) : stock.changeSymbol === "neutral" ? (
-              <p className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
-                {stock.changePercentage}
-              </p>
-            ) : null}
-          </div>
+          <DialogTitle>{name}</DialogTitle>
+
+          <span className="text-xs font-semibold text-zinc-700">
+            {lastTradedPrice}
+          </span>
+          <span className="text-sm font-semibold text-zinc-700">
+            {priceChange}
+          </span>
+          {changeSymbol === "up" ? (
+            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
+              {changePercentage}
+            </span>
+          ) : changeSymbol === "down" ? (
+            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
+              {changePercentage}
+            </span>
+          ) : changeSymbol === "neutral" ? (
+            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
+              {changePercentage}
+            </span>
+          ) : null}
         </DialogHeader>
-        <DialogDescription>
+        <DialogDescription className="flex flex-col">
           <Link
-            href={"/stock/" + stock.name}
-            className="text-xs font-semibold text-zinc-100 bg-slate-800 p-4 rounded hover:shadow-lg text-center cursor-pointer mt-4"
+            target="_blank"
+            href={"/stock/" + name}
+            className="text-xs font-semibold text-zinc-600 bg-slate-100 p-4 rounded hover:shadow-lg text-center cursor-pointer"
           >
-            learn about {stock.name}'s previous performance
+            {name}'s previous performance
           </Link>
+
+          <BuyStockButton stockSymbol={name.toString()} />
         </DialogDescription>
       </DialogContent>
     </Dialog>

@@ -54,7 +54,7 @@ export default function StockSlider({ stocks }: Props) {
               key={index}
               className=" p-3 rounded flex flex-col mb-5 mr-1 border bg-slate-50 hover:shadow-lg text-center cursor-pointer"
             >
-              <div>
+              <div className="text-center">
                 <p className="text-base font-semibold text-zinc-700">
                   {stock.name}
                 </p>

@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { NextAuthProvider } from "@/providers/providers";
+import { Toaster } from "@/components/ui/toaster";
+
 const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,6 +27,7 @@ export default function RootLayout({
           {children}
           <Footer />
         </NextAuthProvider>
+        <Toaster />
       </body>
     </html>
   );
