@@ -1,5 +1,7 @@
+"use client";
 import Link from "next/link";
-import type { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import {
   User2,
   LayoutDashboard,
@@ -9,8 +11,10 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-export default function Profile({ user }: { user: Session["user"] }) {
-  const number = user.balance as number;
+export default function Profile() {
+  const { data: session } = useSession();
+  if (!session) return redirect("/login");
+  const user = session?.user;
   return (
     <aside className="bg-white p-6 rounded shadow-sm flex flex-col mb-7">
       <div className="flex items-center gap-4">
@@ -26,7 +30,7 @@ export default function Profile({ user }: { user: Session["user"] }) {
           Balance
           <br />
           <span className="font-bold text-zinc-600">
-            {number.toLocaleString("en-Us")} BDT
+            {user.balance.toLocaleString("en-Us")} BDT
           </span>
         </p>
       </div>

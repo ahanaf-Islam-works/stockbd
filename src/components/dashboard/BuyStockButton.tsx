@@ -1,19 +1,29 @@
-"use client";
+"USE CLIENT";
 import { trpc } from "@/app/_trpc/client";
 import { buttonVariants } from "../ui/button";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
+import { redirect } from "next/navigation";
+import { TRPCClientError } from "@trpc/client";
 
 interface BuyStockButtonProps {
   stockSymbol: string;
+  price: string;
 }
 
-const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol }) => {
+const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol, price }) => {
   const [shares, setShares] = useState<number>(0);
+  const priceNumber = useMemo(() => parseFloat(price), [price]);
   const { toast } = useToast();
-  const userId = useSession();
-  const id = userId.data?.user.id;
+  const { data: session, update } = useSession();
+
+  useEffect(() => {
+    if (!session) {
+      redirect("/login");
+    }
+  }, [session]);
+
   const {
     data: result,
     error,
@@ -21,9 +31,9 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol }) => {
     refetch,
   } = trpc.user.purchaseStock.useQuery(
     {
-      stockId: stockSymbol,
+      stockName: stockSymbol,
       quantity: shares,
-      userId: id as string,
+      price: priceNumber,
     },
     { enabled: false }
   );
@@ -39,11 +49,21 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol }) => {
       });
     }
   };
+
   useEffect(() => {
     if (isSuccess) {
       toast({
         title: "Thanks for your purchase!",
-        description: result.message,
+        description: result.balance,
+        variant: "success",
+      });
+      update({
+        // only update the balance
+        ...session,
+        user: {
+          ...session?.user,
+          balance: result.balance,
+        },
       });
     }
     if (error) {
@@ -52,15 +72,13 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol }) => {
         description: error.message,
         variant: "destructive",
       });
-      if (error.message === "Not enough funds") {
-        toast({
-          title: "Error",
-          description: error.message,
-          variant: "destructive",
-        });
-      }
     }
-  }, [result]);
+  }, [isSuccess, error]);
+
+  if (!session) {
+    return null; // or render a login component here
+  }
+
   return (
     <>
       <input

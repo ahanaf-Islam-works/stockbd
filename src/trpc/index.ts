@@ -12,6 +12,8 @@ import z from "zod";
 import { singleStockDataController } from "@/controllers/singleStockDataController";
 import { getPersonalStocks } from "@/controllers/user/personalStocks";
 import { purchaseStockController } from "@/controllers/user/purchaseStock";
+import { TRPCError } from "@trpc/server";
+import { error } from "console";
 
 export const appRouter = router({
   user: router({
@@ -41,20 +43,28 @@ export const appRouter = router({
     purchaseStock: privateProcedure
       .input(
         z.object({
-          stockId: z.string(),
+          stockName: z.string(),
           quantity: z.number(),
-          userId: z.string(),
+          price: z.number(),
         })
       )
-      .query(({ ctx, input }) => {
-        const user = ctx.user;
-        if (!user) throw new Error("User not found");
-        const { stockId, quantity, userId } = input;
-        return purchaseStockController({
-          stockId,
+      .query(async ({ ctx, input }) => {
+        const userId = ctx.userId;
+        const { stockName, quantity, price } = input;
+        console.log("userId :", userId);
+        if (!userId)
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "User not found",
+          });
+
+        const result = await purchaseStockController({
+          stockName,
           quantity,
           userId,
+          price,
         });
+        return result;
       }),
   }),
 

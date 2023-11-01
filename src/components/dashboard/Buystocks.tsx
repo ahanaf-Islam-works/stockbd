@@ -10,7 +10,7 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
-import RealTimeStockProps from "@/types/realTimeStockProps";
+import RealTimeStockProps from "@/props/realTimeStockProps";
 import BuyStockButton from "./BuyStockButton";
 
 interface BuyStockProps {
@@ -28,23 +28,22 @@ const Buystocks = ({ stock, children }: BuyStockProps) => {
       <DialogContent className="text-center m-auto">
         <DialogHeader>
           <DialogTitle>{name}</DialogTitle>
-
-          <span className="text-xs font-semibold text-zinc-700">
-            {lastTradedPrice}
+          <span className="text-xs font-semibold text-zinc-700 shadow p-1 mb-2">
+            Last Traded Price: {lastTradedPrice}
           </span>
-          <span className="text-sm font-semibold text-zinc-700">
-            {priceChange}
+          <span className="text-sm font-semibold text-zinc-700 shadow p-1">
+            Price Change: {priceChange}
           </span>
           {changeSymbol === "up" ? (
             <span className="text-sm font-semibold p-1 w-full text-white rounded bg-emerald-400">
               {changePercentage}
             </span>
           ) : changeSymbol === "down" ? (
-            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400">
+            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-rose-400 ">
               {changePercentage}
             </span>
           ) : changeSymbol === "neutral" ? (
-            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400">
+            <span className="text-sm font-semibold p-1 w-full text-white rounded bg-indigo-400 ">
               {changePercentage}
             </span>
           ) : null}
@@ -58,7 +57,10 @@ const Buystocks = ({ stock, children }: BuyStockProps) => {
             {name}'s previous performance
           </Link>
 
-          <BuyStockButton stockSymbol={name.toString()} />
+          <BuyStockButton
+            stockSymbol={name.toString()}
+            price={lastTradedPrice.toString()}
+          />
         </DialogDescription>
       </DialogContent>
     </Dialog>

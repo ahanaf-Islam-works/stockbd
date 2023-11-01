@@ -7,6 +7,10 @@ import db from "@/db";
 import "next-auth/jwt";
 import { JWT } from "next-auth/jwt";
 
+interface ExtendedUser extends User {
+  balance: number;
+}
+
 export const authOptions: NextAuthOptions = {
   // Added type annotation
   pages: {
@@ -73,12 +77,19 @@ export const authOptions: NextAuthOptions = {
       };
     },
 
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user, trigger, session }) => {
+      if (trigger === "update") {
+        return {
+          ...token,
+          balance: session.user.balance as number,
+        };
+      }
       const dbUser = await db.user.findUnique({
         where: {
           email: token.email as string,
         },
       });
+
       if (user && dbUser) {
         return {
           ...token,

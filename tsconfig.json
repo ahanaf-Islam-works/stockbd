@@ -23,12 +23,13 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/types/**/*.ts",
+    "types/**/*.ts",
+    "src/props/**/*.ts",
     ".next/types/**/*.ts",
-    "src/utils/getStockDataRealtime.js"
+    "src/utils/getStockDataRealtime.js",
+    "./types/next-auth.d.ts"
   ],
   "exclude": ["node_modules"]
 }

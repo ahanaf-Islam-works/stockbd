@@ -1,14 +1,13 @@
+import { authOptions } from "@/lib/auth";
 import { TRPCError, initTRPC } from "@trpc/server";
 import { getServerSession } from "next-auth";
-
 
 const t = initTRPC.create();
 const middleware = t.middleware;
 
 const isAuth = middleware(async (opts) => {
-  const getUser = await getServerSession();
+  const getUser = await getServerSession(authOptions);
   const user = getUser?.user;
-
   if (!user) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
@@ -20,6 +19,7 @@ const isAuth = middleware(async (opts) => {
     ctx: {
       userId: user.id,
       user,
+      hello: "world",
     },
   });
 });

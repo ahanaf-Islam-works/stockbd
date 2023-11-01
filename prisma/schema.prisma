@@ -33,7 +33,7 @@ model RealTimeStock {
 
 model Stocks {
   id              Int    @id @default(autoincrement())
-  name            String
+  name            String @unique
   
   price           Int
   amount          Int

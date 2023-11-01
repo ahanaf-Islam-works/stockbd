@@ -1,5 +1,5 @@
 "use client";
-import RealTimeStockProps from "@/types/realTimeStockProps";
+import RealTimeStockProps from "@/props/realTimeStockProps";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Buystocks from "./Buystocks";
@@ -35,7 +35,7 @@ export default function StockSlider({ stocks }: Props) {
       removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
       draggable
       focusOnSelect={false}
-      infinite
+      infinite={true}
       itemClass=""
       keyBoardControl={true}
       minimumTouchDrag={80}

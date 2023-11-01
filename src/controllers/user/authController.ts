@@ -27,6 +27,11 @@ export const authController = async () => {
       },
     });
   }
+  // update user in session
+  session.user = {
+    ...session.user,
+    id: dbuser?.id as string,
+  };
 
   return { success: true };
 };
