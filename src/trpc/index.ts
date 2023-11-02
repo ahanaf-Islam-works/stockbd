@@ -23,6 +23,7 @@ export const appRouter = router({
     authCallBack: publicProcedure.query(authController),
     // user Api (private)
     testPrivate: privateProcedure.query(() => {
+      console.log("test private");
       return { message: "Test private" };
     }),
     getStockDataRealtime: privateProcedure.query(realtimeStockController),

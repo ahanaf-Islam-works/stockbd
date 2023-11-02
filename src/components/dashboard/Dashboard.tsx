@@ -1,17 +1,16 @@
-import Profile from "./Profile";
+import Profile from "./profile/Profile";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
 import Market from "./Market";
 import MarketValue from "./MarketValue";
-import Portfolio from "./Portfolio";
-import PersonalGraph from "./PersonalGraph";
-import Transactions from "./Transactions";
 import { serverClient } from "@/trpc/serverClient";
 import { Session } from "next-auth";
+import Personal from "./Personal";
 
 export default async function Dashboard({ session }: { session: Session }) {
   const userInfo = session?.user;
   const graphData = await serverClient.user.getStockGraphData();
+  const userStock = await serverClient.user.testPrivate();
 
   return (
     <>
@@ -31,13 +30,11 @@ export default async function Dashboard({ session }: { session: Session }) {
                 className="border-2 border-cyan-950 rounded-full p-2"
               />
               <p className="text-base font-semibold text-zinc-700">
-                {" "}
-                Customer Support{" "}
+                Customer Support
               </p>
             </div>
           </Link>
         </div>
-
         <div
           id="current"
           className="min-h-full shadow rounded-md lg:col-span-3 col-span-12 m-auto w-full sm:w-full p-4 order-2"
@@ -47,23 +44,7 @@ export default async function Dashboard({ session }: { session: Session }) {
             <MarketValue chartdata={graphData} />
           </div>
         </div>
-
-        <div
-          id="portfolio"
-          className="min-h-full shadow rounded-md lg:col-span-5 col-span-12 m-auto w-full sm:w-full p-4 order-1 md:order-3"
-        >
-          <div className="flex flex-col gap-4">
-            <Portfolio />
-            <PersonalGraph />
-          </div>
-        </div>
-
-        <div
-          id="previous"
-          className="lg:col-span-8 col-span-12 lg:col-start-3 shadow rounded-md order-4"
-        >
-          <Transactions />
-        </div>
+        <Personal userStock={userStock} />
       </section>
     </>
   );

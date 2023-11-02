@@ -13,4 +13,14 @@ const UserActionsContext = createContext<userContextProps>({
 
 const useUserActions = () => useContext(UserActionsContext);
 
-export { UserActionsContext, useUserActions };
+const UserActionsProvider = ({ children }: { children: React.ReactNode }) => {
+  const [userActions, setUserActions] = useState<boolean>(false);
+
+  return (
+    <UserActionsContext.Provider value={{ userActions, setUserActions }}>
+      {children}
+    </UserActionsContext.Provider>
+  );
+};
+
+export { UserActionsContext, useUserActions, UserActionsProvider };
