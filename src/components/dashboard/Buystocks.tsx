@@ -10,7 +10,7 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
-import RealTimeStockProps from "@/props/realTimeStockProps";
+import { RealTimeStockProps } from "@/props/realTimeStockProps";
 import BuyStockButton from "./BuyStockButton";
 
 interface BuyStockProps {
@@ -57,10 +57,7 @@ const Buystocks = ({ stock, children }: BuyStockProps) => {
             {name}'s previous performance
           </Link>
 
-          <BuyStockButton
-            stockSymbol={name.toString()}
-            price={lastTradedPrice.toString()}
-          />
+          <BuyStockButton stock={stock} />
         </DialogDescription>
       </DialogContent>
     </Dialog>

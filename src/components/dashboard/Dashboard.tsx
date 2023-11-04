@@ -1,16 +1,15 @@
 import Profile from "./profile/Profile";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
-import Market from "./Market";
-import MarketValue from "./MarketValue";
 import { serverClient } from "@/trpc/serverClient";
 import { Session } from "next-auth";
 import Personal from "./Personal";
 
 export default async function Dashboard({ session }: { session: Session }) {
-  const userInfo = session?.user;
+  const userInfo = session.user;
   const graphData = await serverClient.user.getStockGraphData();
-  const userStock = await serverClient.user.testPrivate();
+  const userStock = await serverClient.user.getAllPersonalStocks();
+  const realTimeStockData = await serverClient.user.getStockDataRealtime();
 
   return (
     <>
@@ -35,16 +34,12 @@ export default async function Dashboard({ session }: { session: Session }) {
             </div>
           </Link>
         </div>
-        <div
-          id="current"
-          className="min-h-full shadow rounded-md lg:col-span-3 col-span-12 m-auto w-full sm:w-full p-4 order-2"
-        >
-          <div className="flex flex-col">
-            <Market />
-            <MarketValue chartdata={graphData} />
-          </div>
-        </div>
-        <Personal userStock={userStock} />
+
+        <Personal
+          graphData={graphData}
+          userStock={userStock}
+          stocks={realTimeStockData}
+        />
       </section>
     </>
   );

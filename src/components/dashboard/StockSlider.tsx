@@ -1,5 +1,5 @@
 "use client";
-import RealTimeStockProps from "@/props/realTimeStockProps";
+import { RealTimeStockProps } from "@/props/realTimeStockProps";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import Buystocks from "./Buystocks";

@@ -22,9 +22,11 @@ export const appRouter = router({
     }),
     authCallBack: publicProcedure.query(authController),
     // user Api (private)
-    testPrivate: privateProcedure.query(() => {
-      console.log("test private");
-      return { message: "Test private" };
+    testPrivate: privateProcedure.query(({ ctx }) => {
+      const { user } = ctx;
+      if (!user) throw new Error("User not found");
+      console.log(user.id);
+      return { message: user.id };
     }),
     getStockDataRealtime: privateProcedure.query(realtimeStockController),
     getStockGraphData: privateProcedure.query(updateStockGraphDbController),

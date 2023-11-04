@@ -1,22 +1,19 @@
 "USE CLIENT";
 import { trpc } from "@/app/_trpc/client";
 import { buttonVariants } from "../ui/button";
-import { FC, useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/components/ui/use-toast";
 import { redirect } from "next/navigation";
-import { TRPCClientError } from "@trpc/client";
+import { useUserActions } from "@/providers/userActionsProvider";
+import { RealTimeStockProps } from "@/props/realTimeStockProps";
 
-interface BuyStockButtonProps {
-  stockSymbol: string;
-  price: string;
-}
-
-const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol, price }) => {
+const BuyStockButton = ({ stock }: { stock: RealTimeStockProps }) => {
   const [shares, setShares] = useState<number>(0);
-  const priceNumber = useMemo(() => parseFloat(price), [price]);
+  const priceNumber = parseInt(stock.lastTradedPrice);
   const { toast } = useToast();
   const { data: session, update } = useSession();
+  const { currentMarket, setCurrentMarket, setUserActions } = useUserActions();
 
   useEffect(() => {
     if (!session) {
@@ -31,7 +28,7 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol, price }) => {
     refetch,
   } = trpc.user.purchaseStock.useQuery(
     {
-      stockName: stockSymbol,
+      stockName: stock.name,
       quantity: shares,
       price: priceNumber,
     },
@@ -57,14 +54,22 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol, price }) => {
         description: result.balance,
         variant: "success",
       });
+
       update({
-        // only update the balance
         ...session,
         user: {
           ...session?.user,
           balance: result.balance,
         },
       });
+
+      setUserActions({
+        name: stock.name,
+        price: stock.lastTradedPrice,
+        amount: shares,
+      });
+
+      setCurrentMarket(stock);
     }
     if (error) {
       toast({
@@ -94,7 +99,7 @@ const BuyStockButton: FC<BuyStockButtonProps> = ({ stockSymbol, price }) => {
           className: "mt-4 mb-4 w-full",
         })}
       >
-        Buy {stockSymbol}
+        Buy {stock.name}
       </button>
     </>
   );
