@@ -23,3 +23,9 @@ export interface userStockProps {
   deletedAt: Date | null;
   userId: string;
 }
+
+export type userContextProps = {
+  currentMarket: {
+    stocks: RealTimeStockProps[]; // Define an array of RealTimeStockProps for stocks
+  } | null;
+};

@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import type { Session } from "next-auth";
 import {
   User2,
   LayoutDashboard,
@@ -11,10 +10,8 @@ import {
   ArrowLeftRight,
 } from "lucide-react";
 
-export default function Profile() {
-  const { data: session } = useSession();
-  if (!session) return redirect("/login");
-  const user = session?.user;
+export default function Profile({ session }: { session: Session }) {
+  const user = session.user;
   return (
     <aside className="bg-white p-6 rounded shadow-sm flex flex-col mb-7">
       <div className="flex items-center gap-4">

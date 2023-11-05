@@ -1,15 +1,16 @@
 "use client";
 import { createContext, useContext, useState } from "react";
-import { RealTimeStockProps } from "@/props/realTimeStockProps";
+
+type userActionsProps = {
+  name: string;
+  price: string;
+  amount: number;
+} | null;
 
 type userContextProps = {
-  currentMarket: RealTimeStockProps | null;
+  userActions: userActionsProps;
 
-  userActions: {
-    name: string;
-    price: string;
-    amount: number;
-  } | null;
+  currentMarket: userActionsProps[];
 
   setUserActions: React.Dispatch<
     React.SetStateAction<userContextProps["userActions"]>
@@ -23,7 +24,7 @@ type userContextProps = {
 const UserActionsContext = createContext<userContextProps>({
   userActions: null,
   setUserActions: () => {},
-  currentMarket: null,
+  currentMarket: [],
   setCurrentMarket: () => {},
 });
 
@@ -32,9 +33,9 @@ const useUserActions = () => useContext(UserActionsContext);
 const UserActionsProvider = ({ children }: { children: React.ReactNode }) => {
   const [userActions, setUserActions] =
     useState<userContextProps["userActions"]>(null);
-  const [currentMarket, setCurrentMarket] = useState<RealTimeStockProps | null>(
-    null
-  );
+  const [currentMarket, setCurrentMarket] = useState<
+    userContextProps["currentMarket"]
+  >([]);
 
   return (
     <UserActionsContext.Provider

@@ -32,16 +32,13 @@ interface TransactionsProps {
 
 const Transactions = ({ userStock }: TransactionsProps) => {
   const [selectedNames, setSelectedNames] = useState<string[]>([]);
-  const { userActions } = useUserActions();
+  const { currentMarket } = useUserActions();
 
   const isStockSelected = (stock: Transaction) =>
     selectedNames.includes(stock.name) || selectedNames.length === 0;
 
   return (
     <Card>
-      <h2>
-        Transactions :{userActions?.name} for{userActions?.price}
-      </h2>
       <MultiSelect
         onValueChange={setSelectedNames}
         placeholder="Select Salespeople..."
@@ -61,7 +58,28 @@ const Transactions = ({ userStock }: TransactionsProps) => {
             <TableHeaderCell>Amount</TableHeaderCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
+          {currentMarket.map((item) => (
+            <TableRow key={item?.price}>
+              <TableCell>{item?.name}</TableCell>
+              <TableCell>{item?.price}</TableCell>
+              <TableCell>{item?.amount}</TableCell>
+              <TableCell>
+                <Link
+                  href="#"
+                  className={buttonVariants({
+                    size: "lg",
+                    className: "w-full",
+                    variant: "outline",
+                  })}
+                >
+                  Buy
+                </Link>
+              </TableCell>
+            </TableRow>
+          ))}
+
           {userStock
             .filter((item) => isStockSelected(item))
             .map((item) => (

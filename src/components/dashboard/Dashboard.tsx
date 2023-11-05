@@ -2,7 +2,7 @@ import Profile from "./profile/Profile";
 import Link from "next/link";
 import { MessageSquare } from "lucide-react";
 import { serverClient } from "@/trpc/serverClient";
-import { Session } from "next-auth";
+import type { Session } from "next-auth";
 import Personal from "./Personal";
 
 export default async function Dashboard({ session }: { session: Session }) {
@@ -18,7 +18,7 @@ export default async function Dashboard({ session }: { session: Session }) {
           id="user"
           className="sticky top-0 min-h-full shadow rounded-md lg:col-span-2 col-span-12 m-auto w-full sm:w-full p-4 order-3 md:order-1"
         >
-          {session && userInfo && <Profile />}
+          {session && userInfo && <Profile session={session} />}
           <Link
             href="/"
             className="shadow-sm bg-white p-6 rounded flex flex-col mb-7 hover:shadow-lg"

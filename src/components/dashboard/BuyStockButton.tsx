@@ -69,7 +69,14 @@ const BuyStockButton = ({ stock }: { stock: RealTimeStockProps }) => {
         amount: shares,
       });
 
-      setCurrentMarket(stock);
+      setCurrentMarket((currentMarket) => [
+        ...currentMarket,
+        {
+          name: stock.name,
+          price: stock.lastTradedPrice,
+          amount: shares,
+        },
+      ]);
     }
     if (error) {
       toast({
